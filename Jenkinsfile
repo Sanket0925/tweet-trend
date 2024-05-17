@@ -1,5 +1,5 @@
-def registry = 'https://sanket01.jfrog.io/'
-def imageName = 'sanket01.jfrog.io/valaxy-docker-local//ttrend'
+def registry = 'https://valaxy05.jfrog.io'
+def imageName = 'valaxy05.jfrog.io/valaxy-docker-local/ttrend'
 def version   = '2.1.4'
 pipeline {
     agent {
@@ -72,9 +72,10 @@ environment {
             
             }
         }   
-    }   
+    }
 
-    stage("Docker Build") {
+
+    stage(" Docker Build ") {
       steps {
         script {
            echo '<--------------- Docker Build Started --------------->'
@@ -84,7 +85,7 @@ environment {
       }
     }
 
-            stage ("Docker Publish"){
+            stage (" Docker Publish "){
         steps {
             script {
                echo '<--------------- Docker Publish Started --------------->'  
@@ -95,6 +96,15 @@ environment {
             }
         }
     }
-}
-}
 
+stage(" Deploy ") {
+       steps {
+         script {
+            echo '<--------------- Helm Deploy Started --------------->'
+            sh 'helm install ttrend ttrend-1.0.1.tgz'
+            echo '<--------------- Helm deploy Ends --------------->'
+         }
+       }
+     }  
+}
+}
